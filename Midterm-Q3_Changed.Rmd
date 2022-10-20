@@ -1,0 +1,39 @@
+---
+title: "Midterm - Q3"
+output: html_document
+date: "2022-10-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+a. Importing the dataset and reading it on csv
+```{r}
+library(readr)
+Titanic <- read_csv("https://raw.githubusercontent.com/kijohnson/Data/main/titanic.csv")
+Titanic
+```
+b. Median age-determining the median age for by passenger class
+```{r}
+library(dplyr)
+summary(Titanic) # checking out my dataset to get an idea of the distributions of variables
+Titanic %>% group_by(Pclass) %>% summarise(Median_age=median(Age))# code for determining the median age for by passenger class
+```
+
+c) a plot that shows medians, spread of data, and outliers for the continuous variable age according to passenger class. 
+
+I used boxplot to show medians, spread of data, and outliers for the continuous variable age according to passenger class
+```{r}
+boxplot(Titanic$Age~Titanic$Pclass, ylab = "Age",
+        xlab = "Pclass", main = "Age According to Passenger Class")
+
+
+```
+
+Code to determine the percentage of males and females by class
+
+```{r}
+Titanic %>% group_by(Pclass, Sex) %>% 
+    summarise(Sex = n()) %>%
+  mutate(freq = round(Sex / sum(Sex), 3)*100)
+```
